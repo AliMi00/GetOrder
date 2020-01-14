@@ -2,12 +2,11 @@ package com.example.getorder.services;
 
 import android.app.Application;
 import android.os.AsyncTask;
-import android.text.style.UpdateAppearance;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.getorder.db.OrderDb;
 import com.example.getorder.db.ProductDao;
-import com.example.getorder.db.ProductDb;
 import com.example.getorder.model.Product;
 
 import java.util.List;
@@ -17,11 +16,11 @@ public class ProductService {
     private LiveData<List<Product>> allProducts;
 
     public ProductService(Application application) {
-        ProductDb db = ProductDb.getInstance(application);
+        OrderDb db = OrderDb.getInstance(application);
         productDao = db.productDao();
         allProducts = productDao.getAllProduct();
     }
-    //insert product to local db
+    //insert update and delete product to local db
     public void insert(Product product){
         new InsertProductAsync(productDao).execute(product);
     }
@@ -31,12 +30,13 @@ public class ProductService {
     public void update(Product product){
         new UpdateProductAsync( productDao).execute(product);
     }
+
     //get all product on live data from local db
     public LiveData<List<Product>> getAllProducts(){
         return allProducts;
     }
 
-    //async task for insert product to local db
+    // insert product to local db async task
     private static class InsertProductAsync extends AsyncTask<Product ,Void ,Void>{
 
         private ProductDao productDao;

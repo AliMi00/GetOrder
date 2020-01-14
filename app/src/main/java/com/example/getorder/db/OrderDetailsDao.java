@@ -24,14 +24,15 @@ public interface OrderDetailsDao {
     @Update
     void update(OrderDetails orderDetails);
 
-    @Query("DELETE FROM OrderDetails")
+    @Query("DELETE FROM order_details")
     void deleteAll();
 
-    @Query("SELECT * FROM OrderDetails ")
-    LiveData<List<Product>> getAllOrderDetails();
+    @Query("SELECT * FROM order_details ")
+    LiveData<List<OrderDetails>> getAllOrderDetails();
 
-    @Query("SELECT * FROM OrderDetails WHERE OrderDetails.orderId = :oId ")
-    LiveData<List<Product>> getOrderDetailsByOrderId(int oId);
+    @Query("SELECT * FROM order_details WHERE order_details.orderId = :oId ")
+    LiveData<List<OrderDetails>> getOrderDetailsByOrderId(int oId);
+
 
 
 }

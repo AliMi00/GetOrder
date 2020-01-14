@@ -2,10 +2,10 @@ package com.example.getorder.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.example.getorder.R;
 import com.example.getorder.model.Product;
@@ -26,6 +26,8 @@ public class ProductActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<Product> products) {
                 //todo update recyle view
+                Toast.makeText(ProductActivity.this,"n",Toast.LENGTH_LONG).show();
+
             }
         });
 

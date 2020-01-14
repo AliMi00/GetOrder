@@ -1,14 +1,31 @@
 package com.example.getorder.model;
 
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName ="Product")
-public class Product {
+import static androidx.room.ForeignKey.CASCADE;
+
+@Entity( tableName = "order_details",
+        foreignKeys ={
+                    @ForeignKey(entity = Product.class,
+                        parentColumns = "id",
+                        childColumns = "productId",
+                        onDelete = CASCADE)
+                    ,@ForeignKey(entity = Order.class,
+                        parentColumns = "id",
+                        childColumns = "orderId",
+                        onDelete = CASCADE)},
+        indices = {@Index(value = {"productId"}),@Index(value = "orderId")}
+        )
+
+public class OrderDetails {
+
     @PrimaryKey(autoGenerate = true)
     private int id;
-    private String title;
+    private int orderId;
+    private int productId;
     private String description;
     private int sellPrice;
     private int buyPrice;
@@ -18,8 +35,9 @@ public class Product {
         this.id = id;
     }
 
-    public Product(String title, String description, int sellPrice, int buyPrice, double discount) {
-        this.title = title;
+    public OrderDetails(int orderId, int productId, String description, int sellPrice, int buyPrice, double discount) {
+        this.orderId = orderId;
+        this.productId = productId;
         this.description = description;
         this.sellPrice = sellPrice;
         this.buyPrice = buyPrice;
@@ -30,8 +48,12 @@ public class Product {
         return id;
     }
 
-    public String getTitle() {
-        return title;
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public int getProductId() {
+        return productId;
     }
 
     public String getDescription() {
@@ -50,8 +72,12 @@ public class Product {
         return discount;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
     public void setDescription(String description) {
