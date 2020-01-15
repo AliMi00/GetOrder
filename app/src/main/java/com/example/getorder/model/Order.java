@@ -7,6 +7,9 @@ import androidx.room.TypeConverters;
 
 @Entity(tableName = "orders" )
 public class Order {
+    public Order() {
+    }
+
     @PrimaryKey(autoGenerate = true)
     private int id;
     private int tableNum;

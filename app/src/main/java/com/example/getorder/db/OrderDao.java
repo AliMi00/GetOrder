@@ -27,4 +27,11 @@ public interface OrderDao {
 
     @Query("select * from  orders where orders.id = :orderId")
     Order getOrder(int orderId);
+
+    @Query("delete from orders where id = :orderId")
+    void delete(int orderId);
+
+    @Query("SELECT * FROM orders where status = :orderStatus")
+    LiveData<Order> getOpenOrders(int orderStatus);
+
 }

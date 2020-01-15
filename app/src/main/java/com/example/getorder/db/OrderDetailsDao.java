@@ -17,6 +17,8 @@ public interface OrderDetailsDao {
 
     @Insert
     void insert(OrderDetails orderDetails);
+    @Insert
+    void insert(OrderDetails...orderDetails);
 
     @Delete
     void delete(OrderDetails...orderDetails);
@@ -32,6 +34,9 @@ public interface OrderDetailsDao {
 
     @Query("SELECT * FROM order_details WHERE order_details.orderId = :oId ")
     LiveData<List<OrderDetails>> getOrderDetailsByOrderId(int oId);
+
+    @Query("DELETE FROM order_details WHERE orderId = :oId")
+    void delete(int oId);
 
 
 
