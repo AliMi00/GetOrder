@@ -26,7 +26,7 @@ public class ProductActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<Product> products) {
                 //todo update recyle view
-                Toast.makeText(ProductActivity.this,"n",Toast.LENGTH_LONG).show();
+                Toast.makeText(ProductActivity.this,products.get(1).getDescription(),Toast.LENGTH_LONG).show();
 
             }
         });

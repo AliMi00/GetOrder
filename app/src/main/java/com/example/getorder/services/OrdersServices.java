@@ -25,7 +25,7 @@ import java.util.Locale;
 public class OrdersServices {
     private OrderDao orderDao;
     private ProductDao productDao;
-    private LiveData<List<Order>> getAllOrders;
+    private List<Order> getAllOrders;
     private List<Order> ordersList;
     private LiveData<List<Product>> productLive;
     private Application application;
@@ -36,7 +36,7 @@ public class OrdersServices {
         OrderDb db = OrderDb.getInstance(application);
         productDao = db.productDao();
         orderDao = db.orderDao();
-        getAllOrders = orderDao.getOrders();
+        getAllOrders = orderDao.getOrders().getValue();
         productLive = productDao.getAllProduct();
         orderDetailsDao = db.orderDetailsDao();
         this.application = application;
@@ -108,7 +108,7 @@ public class OrdersServices {
         return finalOd;
     }
     //return all open orders
-    public LiveData<Order> getOpenOrders(){
+    public LiveData<List<Order>> getOpenOrders(){
         return orderDao.getOpenOrders(OrderStatus.OPEN.ordinal());
     }
 

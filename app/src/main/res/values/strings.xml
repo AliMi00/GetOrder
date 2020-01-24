@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">get Order</string>
+    <string name="Product">Product</string>
+    <string name="Order">Order</string>
+    <string name="ReportByDay">Report By Day</string>
+    <string name="ReportByMonth">Report By Month</string>
+    <string name="Waiting">Waiting</string>
+    <string name="Report">Reports</string>
+    <string name="NavHeaderText">nav header text</string>
+    <string name="NavHeaderInfo">nav header info</string>
+    <string name="navigation_drawer_open">navigation drawer open</string>
+    <string name="navigation_drawer_close">navigation drawer close</string>
 </resources>

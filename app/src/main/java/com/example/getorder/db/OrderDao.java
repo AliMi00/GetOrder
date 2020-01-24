@@ -32,6 +32,6 @@ public interface OrderDao {
     void delete(int orderId);
 
     @Query("SELECT * FROM orders where status = :orderStatus")
-    LiveData<Order> getOpenOrders(int orderStatus);
+    LiveData<List<Order>> getOpenOrders(int orderStatus);
 
 }

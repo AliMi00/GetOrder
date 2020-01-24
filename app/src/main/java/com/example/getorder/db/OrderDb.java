@@ -11,7 +11,7 @@ import com.example.getorder.model.Order;
 import com.example.getorder.model.OrderDetails;
 import com.example.getorder.model.Product;
 
-@Database(entities = {OrderDetails.class, Order.class, Product.class},version = 1)
+@Database(entities = {OrderDetails.class, Order.class, Product.class},version = 1,exportSchema = false)
 public abstract class OrderDb extends RoomDatabase {
     //static instance of db
     private static OrderDb instance;

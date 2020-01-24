@@ -1,12 +1,14 @@
 package com.example.getorder.model;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 @Entity(tableName = "orders" )
 public class Order {
+    @Ignore
     public Order() {
     }
 
