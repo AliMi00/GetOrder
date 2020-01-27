@@ -5,9 +5,12 @@
     android:layout_height="match_parent"
     tools:context=".view.WatingFragment">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvWaiting"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        android:background="@android:color/darker_gray"
+        android:padding="5sp"
+        android:scrollbars="vertical"/>
 
 </FrameLayout>

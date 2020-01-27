@@ -19,6 +19,8 @@ import com.example.getorder.R;
 import com.example.getorder.db.OrderDb;
 import com.example.getorder.model.Order;
 import com.example.getorder.model.OrderStatus;
+import com.example.getorder.model.Product;
+import com.example.getorder.services.ProductService;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,6 +30,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+//        ProductService productService = new ProductService(getApplication());
+//        productService.insert(new Product("p1","dec1",25,10,0));
+//        productService.insert(new Product("p2","dec2",35,20,0));
+//        productService.insert(new Product("p3","dec3",45,30,0));
 
         //add toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -48,9 +55,9 @@ public class MainActivity extends AppCompatActivity {
         //check if activity first start load home fragment
         if (savedInstanceState == null) {
             //todo correcting this part after creating fragments
-//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-//                    new MessageFragment()).commit();
-//            navigationView.setCheckedItem(R.id.nav_message);
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    new ProductsFragment()).commit();
+            navigationView.setCheckedItem(R.id.nav_product);
         }
 
     }
@@ -71,11 +78,24 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
             switch (menuItem.getItemId()){
                 case R.id.nav_product:
-                    Toast.makeText(MainActivity.this, "ali", Toast.LENGTH_SHORT).show();
-
-                    //todo make the fragment and go there
-                    //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new classname()).commit();
+                    Toast.makeText(MainActivity.this, "fra1", Toast.LENGTH_SHORT).show();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ProductsFragment()).commit();
                     break;
+                case R.id.nav_order:
+                    Toast.makeText(MainActivity.this, "fra2", Toast.LENGTH_SHORT).show();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new SetOrderFragment()).commit();
+                    break;
+                case R.id.nav_waiting:
+                    Toast.makeText(MainActivity.this, "fra3", Toast.LENGTH_SHORT).show();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new WatingFragment()).commit();
+                    break;
+                case R.id.nav_report_day:
+                    Toast.makeText(MainActivity.this, "fra4", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.nav_report_month:
+                    Toast.makeText(MainActivity.this, "fra5", Toast.LENGTH_SHORT).show();
+                    break;
+
 
             }
             drawerLayout.closeDrawer(GravityCompat.START);

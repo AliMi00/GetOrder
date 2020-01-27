@@ -29,19 +29,30 @@ public class OrderDetails {
     private String description;
     private int sellPrice;
     private int buyPrice;
+    private int quantity;
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
     private double discount;
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public OrderDetails(int orderId, int productId, String description, int sellPrice, int buyPrice, double discount) {
+    public OrderDetails(int orderId, int productId, String description, int sellPrice, int buyPrice,int quantity, double discount) {
         this.orderId = orderId;
         this.productId = productId;
         this.description = description;
         this.sellPrice = sellPrice;
         this.buyPrice = buyPrice;
         this.discount = discount;
+        this.quantity = quantity;
     }
 
     public int getId() {

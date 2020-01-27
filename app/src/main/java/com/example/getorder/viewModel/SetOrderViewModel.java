@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 
 import com.example.getorder.model.Order;
 import com.example.getorder.model.OrderDetails;
@@ -21,7 +22,7 @@ public class SetOrderViewModel extends AndroidViewModel {
     private OrdersServices ordersServices;
     private LiveData<List<Product>> allProducts;
     private ProductService productService;
-    private List<OrderDetails> tempOrderDetailsList;
+    private List<OrderDetails> tempOrderDetailsList = new ArrayList<>() ;
     private Order TempOrder;
     private OrderDetails orderDetails;
 
@@ -31,7 +32,14 @@ public class SetOrderViewModel extends AndroidViewModel {
         productService = new ProductService(application);
         allProducts =  productService.getAllProducts();
 
+
+
     }
+
+    public LiveData<List<Product>> getAllProduct(){
+        return allProducts;
+    }
+
     //return orderDetail
 
     public OrderDetails getOrderDetails() {
@@ -51,12 +59,24 @@ public class SetOrderViewModel extends AndroidViewModel {
     }
 
     public List<OrderDetails> getTempOrderDetailsList() {
-        return tempOrderDetailsList;
+        if(tempOrderDetailsList == null){
+            return tempOrderDetailsList = new ArrayList<>();
+        }
+        else{
+            return tempOrderDetailsList;
+        }
     }
 
     public void setTempOrderDetailsList(List<OrderDetails> tempOrderDetailsList) {
         this.tempOrderDetailsList = tempOrderDetailsList;
+
     }
+
+    public void setSingleTempOrderDetailsList(OrderDetails orderDetails) {
+        tempOrderDetailsList.add(orderDetails);
+
+    }
+
     //add data to db
 
     //add TempOrder to local db with TempOrder and list of orderDetails

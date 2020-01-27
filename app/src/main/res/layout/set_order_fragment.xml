@@ -5,9 +5,20 @@
     android:layout_height="match_parent"
     tools:context=".view.SetOrderFragment">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSetOrder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        android:background="@android:color/darker_gray"
+        android:padding="5sp"
+        android:scrollbars="vertical"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnAddOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_add"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="32sp"/>
 
 </FrameLayout>
