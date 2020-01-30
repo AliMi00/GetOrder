@@ -25,7 +25,6 @@ public class ProductActivity extends AppCompatActivity {
         productViewModel.getAllProduct().observe(this, new Observer<List<Product>>() {
             @Override
             public void onChanged(List<Product> products) {
-                //todo update recyle view
                 Toast.makeText(ProductActivity.this,products.get(1).getDescription(),Toast.LENGTH_LONG).show();
 
             }

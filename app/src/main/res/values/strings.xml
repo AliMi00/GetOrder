@@ -10,4 +10,14 @@
     <string name="NavHeaderInfo">nav header info</string>
     <string name="navigation_drawer_open">navigation drawer open</string>
     <string name="navigation_drawer_close">navigation drawer close</string>
+    <string name="waiting_dialog_title">waiting dialog title</string>
+    <string name="product_dialog_title">Title</string>
+    <string name="product_dialog_description">Description</string>
+    <string name="product_dialog_sell">Sell Price</string>
+    <string name="product_dialog_buy">Buy Price</string>
+    <string name="product_dialog_discount">Discount</string>
+    <string name="product_added">Product Added</string>
+    <string name="product_changed">Product Changed</string>
+    <string name="product_change_dialog_title">Change Product</string>
+    <string name="product_add_dialog_title">Add Product</string>
 </resources>

@@ -48,8 +48,6 @@ public class SetOrderFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(SetOrderViewModel.class);
-        // TODO: Use the ViewModel
-
 
         FloatingActionButton btnAddOrder = getView().findViewById(R.id.btnAddOrder);
         btnAddOrder.setOnClickListener(btnAddOrderOnClickListener);

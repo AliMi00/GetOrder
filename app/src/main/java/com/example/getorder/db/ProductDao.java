@@ -18,13 +18,15 @@ public interface ProductDao {
     @Delete
     void delete(Product...products);
 
-    @Update
-    void update(Product product);
+    @Update(entity = Product.class)
+    void update(Product...product);
 
     @Query("DELETE FROM Product")
     void deleteAll();
 
     @Query("SELECT * FROM Product ")
     LiveData<List<Product>> getAllProduct();
+
+
 
 }

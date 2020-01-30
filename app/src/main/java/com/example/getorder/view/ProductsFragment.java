@@ -3,6 +3,7 @@ package com.example.getorder.view;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,8 +17,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.getorder.R;
+import com.example.getorder.model.Order;
+import com.example.getorder.model.OrderStatus;
 import com.example.getorder.model.Product;
 import com.example.getorder.viewModel.ProductsViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -63,8 +67,7 @@ public class ProductsFragment extends Fragment {
         productAdapter.SetOnItemClickListener(new ProductAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Product product) {
-                //todo click on each item of list
-
+                openDialog(product);
             }
         });
         rvProduct.setAdapter(productAdapter);
@@ -80,10 +83,34 @@ public class ProductsFragment extends Fragment {
     View.OnClickListener btnAddProductOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            //todo goto add product activity
-
+            openAddDialog();
         }
     };
+
+    public void openDialog(final Product product) {
+        ProductDialog productDialog = new ProductDialog();
+        productDialog.setProduct(product);
+        productDialog.setListener(new ProductDialog.ProductDialogListener() {
+            @Override
+            public void changeProduct(Product product) {
+                mViewModel.update(product);
+                Toast.makeText(getContext(), R.string.product_changed, Toast.LENGTH_SHORT).show();
+            }
+        });
+        productDialog.show(getActivity().getSupportFragmentManager(),"update product");
+    }
+
+    public void openAddDialog(){
+        AddProductDialog addProductDialog = new AddProductDialog();
+        addProductDialog.setListener(new AddProductDialog.AddProductDialogListener() {
+            @Override
+            public void addProduct(Product product) {
+                mViewModel.insert(product);
+                Toast.makeText(getContext(), R.string.product_added, Toast.LENGTH_SHORT).show();
+            }
+        });
+        addProductDialog.show(getActivity().getSupportFragmentManager(),"add Product");
+    }
 }
 
 

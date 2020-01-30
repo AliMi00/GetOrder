@@ -46,7 +46,7 @@ public class OrdersServices {
 
         AsyncResponInt asyncResponInt = new AsyncResponInt() {
             @Override
-            public Void asyncRes(String string) {
+            public void asyncRes(String string) {
                 OrderDetails[] od = orderDetails.toArray(new OrderDetails[0]);
                 for (int i = 0 ;i < od.length;i++ ) {
                     od[i].setOrderId(Integer.valueOf(string));
@@ -54,7 +54,6 @@ public class OrdersServices {
                 }
                 new AddOrderDetailToOrderAsync(orderDao,orderDetailsDao).execute(od);
 
-                return null;
             }
         };
         new InsertOrderAsync(orderDao,asyncResponInt).execute(order);
@@ -110,6 +109,16 @@ public class OrdersServices {
     //return all open orders
     public LiveData<List<Order>> getOpenOrders(){
         return orderDao.getOpenOrders(OrderStatus.OPEN.ordinal());
+    }
+
+    public void alitest(Order order){
+        AsyncResponInt asyncResponInt = new AsyncResponInt() {
+            @Override
+            public void asyncRes(String string) {
+
+            }
+        };
+        new InsertOrderAsync(orderDao,asyncResponInt).execute(order);
     }
 
     //ASYNC TASK
@@ -212,7 +221,7 @@ public class OrdersServices {
             //You can change "yyyyMMdd as per your requirement
             int currentDateAndTime = Integer.valueOf(sdf.format(new Date()));
 
-            int id;
+            int id = 0;
             int sumBuy = 0;
             int sumSell = 0;
 
@@ -220,7 +229,7 @@ public class OrdersServices {
             order.setAmountSell(sumSell);
             order.setProfit(sumSell-sumBuy);
             order.setCreateDate(currentDateAndTime);
-            order.setStatus(0);
+            order.setStatus(OrderStatus.OPEN.ordinal());
             //insert order to local db
             id =(int) orderDao.insert(order);
             return id;

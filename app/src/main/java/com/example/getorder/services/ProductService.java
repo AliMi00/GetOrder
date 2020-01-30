@@ -75,7 +75,7 @@ public class ProductService {
 
         @Override
         protected Void doInBackground(Product... products) {
-            productDao.update(products[0]);
+            productDao.update(products);
             return null;
 
         }

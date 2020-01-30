@@ -1,5 +1,7 @@
 package com.example.getorder.view;
 
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -17,6 +19,7 @@ import android.view.ViewGroup;
 
 import com.example.getorder.R;
 import com.example.getorder.model.Order;
+import com.example.getorder.model.OrderStatus;
 import com.example.getorder.model.Product;
 import com.example.getorder.viewModel.WaitingViewModel;
 
@@ -44,7 +47,7 @@ public class WatingFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(WaitingViewModel.class);
-        // TODO: Use the ViewModel
+
         buildRecycleView();
     }
 
@@ -55,14 +58,14 @@ public class WatingFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getContext());
         rvWaiting.setLayoutManager(layoutManager);
         adapter = new WaitingAdapter();
+        //click on each item open dialog box
         adapter.setOnItemClickListener(new WaitingAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Order order) {
-                //todo Click on each item
-
-
+                openDialog(order);
             }
         });
+        //get all the open orders this is live data
         mViewModel.getAllOpenOrders().observe(getViewLifecycleOwner(), new Observer<List<Order>>() {
             @Override
             public void onChanged(List<Order> orders) {
@@ -74,6 +77,19 @@ public class WatingFragment extends Fragment {
         });
         rvWaiting.setAdapter(adapter);
 
+    }
+    //open dialog box to set order to paid and close if click ok setPaidOrder set the order status to paid
+    public void openDialog(final Order order) {
+        WaitingDialog waitingDialog = new WaitingDialog();
+        WaitingDialog.WaitingDialogListener listener = new WaitingDialog.WaitingDialogListener() {
+            @Override
+            public void setPaidOrder() {
+                mViewModel.setOrderStatus(order.getId(), OrderStatus.PAYED);
+
+            }
+        };
+        waitingDialog.setListener(listener);
+        waitingDialog.show(getActivity().getSupportFragmentManager(),"ali");
     }
 
 }

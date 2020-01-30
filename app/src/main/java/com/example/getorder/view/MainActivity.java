@@ -18,10 +18,15 @@ import android.widget.Toast;
 import com.example.getorder.R;
 import com.example.getorder.db.OrderDb;
 import com.example.getorder.model.Order;
+import com.example.getorder.model.OrderDetails;
 import com.example.getorder.model.OrderStatus;
 import com.example.getorder.model.Product;
+import com.example.getorder.services.OrdersServices;
 import com.example.getorder.services.ProductService;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
@@ -31,10 +36,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // add dummy data to db
 //        ProductService productService = new ProductService(getApplication());
 //        productService.insert(new Product("p1","dec1",25,10,0));
 //        productService.insert(new Product("p2","dec2",35,20,0));
 //        productService.insert(new Product("p3","dec3",45,30,0));
+//
+//        Order order = new Order(2,25,20,5,OrderStatus.OPEN.ordinal(),20200101);
+//        List<OrderDetails> od = new ArrayList<>();
+//        od.add(new OrderDetails(-1,5,"",25,20,1,0));
+//        OrdersServices ordersServices = new OrdersServices(getApplication());
+//        ordersServices.alitest(order);
+
+
 
         //add toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -54,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
 
         //check if activity first start load home fragment
         if (savedInstanceState == null) {
-            //todo correcting this part after creating fragments
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new ProductsFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_product);
@@ -90,9 +103,11 @@ public class MainActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new WatingFragment()).commit();
                     break;
                 case R.id.nav_report_day:
+                    //todo add report day activity and navigate to it
                     Toast.makeText(MainActivity.this, "fra4", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.nav_report_month:
+                    //todo add report day activity and navigate to it
                     Toast.makeText(MainActivity.this, "fra5", Toast.LENGTH_SHORT).show();
                     break;
 
