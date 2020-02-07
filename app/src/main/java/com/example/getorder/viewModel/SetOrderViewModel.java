@@ -1,18 +1,15 @@
 package com.example.getorder.viewModel;
 
 import android.app.Application;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
-
 import com.example.getorder.model.Order;
 import com.example.getorder.model.OrderDetails;
 import com.example.getorder.model.Product;
 import com.example.getorder.services.OrdersServices;
 import com.example.getorder.services.ProductService;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,7 +71,6 @@ public class SetOrderViewModel extends AndroidViewModel {
 
     public void setSingleTempOrderDetailsList(OrderDetails orderDetails) {
         tempOrderDetailsList.add(orderDetails);
-
     }
 
     //add data to db
@@ -108,4 +104,44 @@ public class SetOrderViewModel extends AndroidViewModel {
     }
 
 
+
+    //NEW
+    public int newAddOrder(Order order){
+        int id = ordersServices.addNewOrder(order);
+        return id;
+    }
+
+    public LiveData<List<Order>> getLastOrder(){
+        return ordersServices.getLastOrder();
+    }
+
+    public void deleteNewOrders(){
+        ordersServices.deleteNewOrder();
+    }
+    public void newAddOrderDetails(OrderDetails orderDetails){
+        ordersServices.addOrderDetailToOrder(orderDetails);
+    }
+
+    public LiveData<List<OrderDetails>> getAllNewOrderDetails(int orderId) {
+        return ordersServices.getAllNewOrderDetails(orderId);
+    }
+
+    public void newUpdateOrderDetails(OrderDetails orderDetails){
+        ordersServices.updateOrderDetails(orderDetails);
+    }
+
+    public void newUpdateOrder(List<OrderDetails> orderDetails, Order order){
+
+        int sumBuy=0,sumSell=0,profit;
+
+        for(OrderDetails od : orderDetails){
+            sumBuy += od.getBuyPrice();
+            sumSell += (od.getSellPrice()*od.getDiscount());
+        }
+        profit = sumSell-sumBuy;
+        order.setProfit(profit);
+        order.setAmountBuy(sumBuy);
+        order.setAmountSell(sumSell);
+        ordersServices.updateOrder(order);
+    }
 }

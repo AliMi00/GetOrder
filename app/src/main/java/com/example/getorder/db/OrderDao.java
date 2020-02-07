@@ -34,4 +34,10 @@ public interface OrderDao {
     @Query("SELECT * FROM orders where status = :orderStatus")
     LiveData<List<Order>> getOpenOrders(int orderStatus);
 
+    @Query("select * from  orders where status = :orderStatus order by id desc LIMIT 1")
+    LiveData<List<Order>> getLastOrder(int orderStatus);
+
+    @Query("delete from orders where status = :orderStatus")
+    void deleteOldNewOrders(int orderStatus);
+
 }

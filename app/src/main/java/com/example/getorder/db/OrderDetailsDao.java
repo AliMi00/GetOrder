@@ -38,6 +38,4 @@ public interface OrderDetailsDao {
     @Query("DELETE FROM order_details WHERE orderId = :oId")
     void delete(int oId);
 
-
-
 }

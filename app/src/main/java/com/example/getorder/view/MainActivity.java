@@ -91,11 +91,11 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
             switch (menuItem.getItemId()){
                 case R.id.nav_product:
-                    Toast.makeText(MainActivity.this, "fra1", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this,""+ String.valueOf(OrderStatus.NEW.ordinal()), Toast.LENGTH_SHORT).show();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ProductsFragment()).commit();
                     break;
                 case R.id.nav_order:
-                    Toast.makeText(MainActivity.this, "fra2", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, String.valueOf(OrderStatus.NEW.ordinal()), Toast.LENGTH_SHORT).show();
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new SetOrderFragment()).commit();
                     break;
                 case R.id.nav_waiting:

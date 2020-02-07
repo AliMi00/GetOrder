@@ -1,10 +1,12 @@
 package com.example.getorder.view;
 
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.getorder.R;
@@ -66,22 +68,29 @@ public class SetOrderAdapter extends RecyclerView.Adapter<SetOrderAdapter.SetOrd
         return evh;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onBindViewHolder(SetOrderViewHolder holder, int position) {
         if(mProductList == null){
             mProductList = new ArrayList<>();
         }
-        Product currentItem = mProductList.get(position);
+        final Product currentItem = mProductList.get(position);
 
         holder.mTxtProductName.setText(currentItem.getTitle());
         holder.mTxtProductPrice.setText(String.valueOf( currentItem.getSellPrice()));
-        for(OrderDetails od :mOrderDetailsList){
-            if(od.getProductId() == currentItem.getId()){
-                holder.mTxtQuantity.setText(String.valueOf(od.getQuantity()));
+        if(mOrderDetailsList.size() == 0){
+            holder.mTxtQuantity.setText("0");
+        }else {
+            for (OrderDetails od : mOrderDetailsList) {
+                if (od.getProductId() == currentItem.getId()) {
+                    holder.mTxtQuantity.setText(String.valueOf(od.getQuantity()));
+                    return;
+                }
             }
+            holder.mTxtQuantity.setText("0");
         }
-        holder.mTxtQuantity.setText("0");
     }
+
 
     @Override
     public int getItemCount() {

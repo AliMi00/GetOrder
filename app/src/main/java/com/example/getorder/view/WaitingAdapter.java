@@ -21,6 +21,7 @@ public class WaitingAdapter extends RecyclerView.Adapter<WaitingAdapter.WaitingV
 
     public void setmOrderList(List<Order> mOrderList) {
         this.mOrderList = mOrderList;
+        notifyDataSetChanged();
     }
 
     @NonNull

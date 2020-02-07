@@ -6,7 +6,8 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.RadioButton;
+import android.widget.EditText;
+import android.widget.NumberPicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,14 +15,18 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.getorder.R;
 
-public class WaitingDialog extends DialogFragment {
+public class SetOrderQuantityDialog extends DialogFragment {
 
-    private RadioButton rbtnPaid,rbtnUnPaid;
+    private NumberPicker numPicker;
+    private EditText edtDesc;
 
+    public interface SetOrderQuantityListener{
+        void getQuantity(int quantity,String description);
+    }
 
-    WaitingDialogListener listener;
+    private SetOrderQuantityListener listener;
 
-    public void setListener(WaitingDialogListener listener) {
+    public void setOrderQuantityListener(SetOrderQuantityListener listener) {
         this.listener = listener;
     }
 
@@ -31,10 +36,13 @@ public class WaitingDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.waiting_dialog_layout, null);
-
+        View view = inflater.inflate(R.layout.set_order_quantity_dialog, null);
+        numPicker = view.findViewById(R.id.numPicker);
+        edtDesc = view.findViewById(R.id.edtDescription);
+        numPicker.setMinValue(0);
+        numPicker.setMaxValue(20);
         builder.setView(view)
-                .setTitle(R.string.waiting_dialog_title)
+                .setTitle(R.string.set_quantity_dialog_title)
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -44,17 +52,12 @@ public class WaitingDialog extends DialogFragment {
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        listener.setPaidOrder();
+
+                        listener.getQuantity(numPicker.getValue(),edtDesc.getText().toString());
                     }
                 });
 
-        rbtnPaid = view.findViewById(R.id.rbtnPaid);
-        rbtnUnPaid = view.findViewById(R.id.rbtnUnPaid);
 
         return builder.create();
-    }
-
-    public interface WaitingDialogListener{
-        void setPaidOrder();
     }
 }

@@ -9,25 +9,29 @@ import androidx.lifecycle.LiveData;
 
 import com.example.getorder.model.Order;
 import com.example.getorder.model.OrderStatus;
-import com.example.getorder.model.Product;
 import com.example.getorder.services.OrdersServices;
-import com.example.getorder.services.ProductService;
 
 import java.util.List;
 
 public class WaitingViewModel extends AndroidViewModel {
     private OrdersServices ordersServices;
     private LiveData<List<Order>> allOpenOrders;
+    private LiveData<List<Order>> allOrders;
 
     public WaitingViewModel(@NonNull Application application) {
         super(application);
         ordersServices = new OrdersServices(application);
-        allOpenOrders = ordersServices.getOpenOrders();
+        allOpenOrders = ordersServices.getStatusOrders(OrderStatus.OPEN.ordinal());
+        allOrders = ordersServices.getAllOrders();
     }
 
     //get all Open Orders
     public LiveData<List<Order>> getAllOpenOrders() {
         return allOpenOrders;
+    }
+
+    public LiveData<List<Order>> getAllOrders() {
+        return allOrders;
     }
 
     //to editing the existing open order

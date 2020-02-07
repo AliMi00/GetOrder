@@ -16,6 +16,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
 }
 
 dependencies {
@@ -26,7 +30,7 @@ dependencies {
     //lifecycle component
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+    annotationProcessor "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
     //room com
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"

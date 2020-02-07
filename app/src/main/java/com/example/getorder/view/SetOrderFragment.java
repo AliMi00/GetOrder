@@ -1,8 +1,10 @@
 package com.example.getorder.view;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,9 +17,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.getorder.R;
+import com.example.getorder.model.Order;
 import com.example.getorder.model.OrderDetails;
+import com.example.getorder.model.OrderStatus;
 import com.example.getorder.model.Product;
 import com.example.getorder.viewModel.SetOrderViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -32,6 +37,7 @@ public class SetOrderFragment extends Fragment {
     private RecyclerView rvSetOrder;
     private SetOrderAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
+    private Order mOrder;
 
 
     public static SetOrderFragment newInstance() {
@@ -52,7 +58,16 @@ public class SetOrderFragment extends Fragment {
         FloatingActionButton btnAddOrder = getView().findViewById(R.id.btnAddOrder);
         btnAddOrder.setOnClickListener(btnAddOrderOnClickListener);
         buildRecycleView();
-
+        mViewModel.deleteNewOrders();
+        mViewModel.getLastOrder().observe(getViewLifecycleOwner(), new Observer<List<Order>>() {
+            @Override
+            public void onChanged(List<Order> orders) {
+                if(orders.size()>0){
+                    mOrder =orders.get(0);
+                    getTempOrderDetails();
+                }
+            }
+        });
     }
 
     //build recycleView And click Listener
@@ -65,7 +80,12 @@ public class SetOrderFragment extends Fragment {
             @Override
             public void onItemClick(Product product) {
                 //todo set on item click to open dialog bar to set quantity and add order details
-
+                if(mOrder == null){
+                    openSetOrderDialog();
+                }
+                else {
+                    openDialog(product);
+                }
 
             }
         });
@@ -85,9 +105,98 @@ public class SetOrderFragment extends Fragment {
         @Override
         public void onClick(View v) {
             //todo goto add Order or open dialog box
+            if(mOrder == null){
+                openSetOrderDialog();
+            }
+            else {
+                openDialogForSubmitOrder();
+            }
 
         }
     };
+
+    public void openDialog(final Product product) {
+        SetOrderQuantityDialog dialog = new SetOrderQuantityDialog();
+        dialog.setOrderQuantityListener(new SetOrderQuantityDialog.SetOrderQuantityListener() {
+            @Override
+            public void getQuantity(int quantity,String description) {
+                List<OrderDetails> od = mViewModel.getTempOrderDetailsList();
+                for(OrderDetails o : od){
+                    if(o.getProductId() == product.getId()){
+                        o.setQuantity(quantity);
+                        o.setDescription(description);
+                        mViewModel.newUpdateOrderDetails(o);
+                        getTempOrderDetails();
+                        return;
+                    }
+                }
+                mViewModel.newAddOrderDetails(new OrderDetails(
+                        mOrder.getId(),
+                        product.getId(),
+                        description,
+                        product.getSellPrice(),
+                        product.getBuyPrice(),
+                        quantity,
+                        product.getDiscount()));
+            }
+        });
+        dialog.show(getActivity().getSupportFragmentManager(),"quantity");
+
+    }
+
+    public void openSetOrderDialog(){
+        SetOrderDialog dialog = new SetOrderDialog();
+        dialog.setListener(new SetOrderDialog.SetOrderDialogListener() {
+            @Override
+            public void setOrder(Order order) {
+                if(order != null && mViewModel.getTempOrderDetailsList() != null) {
+                    int id = mViewModel.newAddOrder(order);
+                    Toast.makeText(getContext(), "order Added" + String.valueOf(id), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        dialog.show(getActivity().getSupportFragmentManager(),"setOrder");
+    }
+
+    // dialog to submit the order and take new order
+    public void openDialogForSubmitOrder(){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(R.string.set_order_submit_title)
+                .setMessage(R.string.set_order_submit_dialog_message)
+                .setPositiveButton(R.string.Ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mOrder.setStatus(OrderStatus.OPEN.ordinal());
+                        mViewModel.newUpdateOrder(mViewModel.getTempOrderDetailsList(),mOrder);
+                        mOrder = null;
+                        mViewModel.setTempOrderDetailsList(new ArrayList<>());
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+    }
+
+    public void getTempOrderDetails(){
+        if(mOrder!=null){
+            mViewModel.getAllNewOrderDetails(mOrder.getId()).observe(getViewLifecycleOwner(), new Observer<List<OrderDetails>>() {
+                @Override
+                public void onChanged(List<OrderDetails> orderDetails) {
+                    mViewModel.setTempOrderDetailsList(orderDetails);
+                    adapter.setmOrderDetailsList(orderDetails);
+
+                }
+            });
+        }
+    }
 
 }
 

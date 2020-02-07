@@ -20,4 +20,12 @@
     <string name="product_changed">Product Changed</string>
     <string name="product_change_dialog_title">Change Product</string>
     <string name="product_add_dialog_title">Add Product</string>
+    <string name="set_quantity_dialog_title">Set Quantity</string>
+    <string name="quantity">Quantity</string>
+    <string name="set_order_dialog_title">Add the Order</string>
+    <string name="set_order_table_dialog">table Number</string>
+    <string name="Ok">OK</string>
+    <string name="cancel">cancel</string>
+    <string name="set_order_submit_title">submit</string>
+    <string name="set_order_submit_dialog_message">are you sure ?</string>
 </resources>
