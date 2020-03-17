@@ -3,6 +3,7 @@ package com.example.getorder.view;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -10,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.getorder.R;
 import com.example.getorder.model.Order;
-import com.example.getorder.model.Product;
 
 import java.util.List;
 
@@ -39,6 +39,7 @@ public class WaitingAdapter extends RecyclerView.Adapter<WaitingAdapter.WaitingV
         holder.txtTable.setText("Table : " + currentItem.getTableNum());
         holder.txtTotalPrice.setText(String.valueOf(currentItem.getAmountSell()));
 
+
     }
 
     @Override
@@ -51,29 +52,40 @@ public class WaitingAdapter extends RecyclerView.Adapter<WaitingAdapter.WaitingV
     }
 
     public interface OnItemClickListener {
-        void onItemClick(Order order);
+        void onOrderClick(Order order);
+        void onShowItemClick(Order order);
     }
 
     //View Holder Class
     public class WaitingViewHolder extends RecyclerView.ViewHolder {
         public TextView txtTable;
         public TextView txtTotalPrice;
+        public ImageButton btnOpenItems;
 
         public WaitingViewHolder(View itemView) {
             super(itemView);
             txtTable = itemView.findViewById(R.id.txtTable);
             txtTotalPrice = itemView.findViewById(R.id.txtOrderTotalPrice);
+            btnOpenItems = itemView.findViewById(R.id.btnOpenItems);
 
-
+            btnOpenItems.setOnClickListener(v -> {
+                int position = getAdapterPosition();
+                if(listener !=null && position != RecyclerView.NO_POSITION){
+                    listener.onShowItemClick(mOrderList.get(position));
+                }
+            });
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
                     if (listener != null && position != RecyclerView.NO_POSITION) {
-                        listener.onItemClick(mOrderList.get(position));
+                        listener.onOrderClick(mOrderList.get(position));
                     }
                 }
             });
+
+
+
         }
     }
 

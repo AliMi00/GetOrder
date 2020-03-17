@@ -6,27 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.LiveData;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.getorder.R;
-import com.example.getorder.db.OrderDb;
-import com.example.getorder.model.Order;
-import com.example.getorder.model.OrderDetails;
 import com.example.getorder.model.OrderStatus;
-import com.example.getorder.model.Product;
-import com.example.getorder.services.OrdersServices;
-import com.example.getorder.services.ProductService;
 import com.google.android.material.navigation.NavigationView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
@@ -96,15 +83,16 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.nav_order:
                     Toast.makeText(MainActivity.this, String.valueOf(OrderStatus.NEW.ordinal()), Toast.LENGTH_SHORT).show();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new SetOrderFragment()).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,SetOrderFragment.newInstance(0)).commit();
                     break;
                 case R.id.nav_waiting:
                     Toast.makeText(MainActivity.this, "fra3", Toast.LENGTH_SHORT).show();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new WatingFragment()).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new WaitingFragment()).commit();
                     break;
                 case R.id.nav_report_day:
                     //todo add report day activity and navigate to it
                     Toast.makeText(MainActivity.this, "fra4", Toast.LENGTH_SHORT).show();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, OrderDailyReportFragment.newInstance()).commit();
                     break;
                 case R.id.nav_report_month:
                     //todo add report day activity and navigate to it

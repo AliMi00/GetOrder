@@ -1,7 +1,5 @@
 package com.example.getorder.view;
 
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -16,25 +14,25 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.getorder.R;
 import com.example.getorder.model.Order;
 import com.example.getorder.model.OrderStatus;
-import com.example.getorder.model.Product;
 import com.example.getorder.viewModel.WaitingViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WatingFragment extends Fragment {
+public class WaitingFragment extends Fragment {
 
     private WaitingViewModel mViewModel;
     private RecyclerView rvWaiting;
     private WaitingAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
-    public static WatingFragment newInstance() {
-        return new WatingFragment();
+    public static WaitingFragment newInstance() {
+        return new WaitingFragment();
     }
 
     @Override
@@ -61,8 +59,15 @@ public class WatingFragment extends Fragment {
         //click on each item open dialog box
         adapter.setOnItemClickListener(new WaitingAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(Order order) {
+            public void onOrderClick(Order order) {
                 openDialog(order);
+            }
+
+            @Override
+            public void onShowItemClick(Order order) {
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,SetOrderFragment.newInstance(order.getId())).commit();
+                Toast.makeText(getContext(), "a", Toast.LENGTH_SHORT).show();
+
             }
         });
         //get all the open orders this is live data
@@ -83,8 +88,9 @@ public class WatingFragment extends Fragment {
         WaitingDialog waitingDialog = new WaitingDialog();
         WaitingDialog.WaitingDialogListener listener = new WaitingDialog.WaitingDialogListener() {
             @Override
-            public void setPaidOrder() {
-                mViewModel.setOrderStatus(order.getId(), OrderStatus.PAYED);
+            public void setPaidOrder(OrderStatus orderStatus) {
+                order.setStatus(orderStatus.ordinal());
+                mViewModel.setOrderStatus(order);
 
             }
         };

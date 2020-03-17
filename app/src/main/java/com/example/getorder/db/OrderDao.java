@@ -6,8 +6,9 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
-
 import com.example.getorder.model.Order;
+import com.example.getorder.model.OrderDetails;
+import com.example.getorder.model.OrderReport;
 import com.example.getorder.model.Product;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public interface OrderDao {
     LiveData<List<Order>> getOrders();
 
     @Query("select * from  orders where orders.id = :orderId")
-    Order getOrder(int orderId);
+    LiveData<Order> getOrder(int orderId);
 
     @Query("delete from orders where id = :orderId")
     void delete(int orderId);
@@ -39,5 +40,14 @@ public interface OrderDao {
 
     @Query("delete from orders where status = :orderStatus")
     void deleteOldNewOrders(int orderStatus);
+
+    @Query("SELECT p.title as productName , sum(od.quantity) as productQuantity , sum(od.sellPrice*od.quantity) as productSum " +
+            "FROM orders As o " +
+            "inner join order_details as od on o.id = od.orderId " +
+            "inner join product as p on od.productId = p.id  " +
+            "where :date1 <= o.createDate AND o.createDate <= :date2 AND o.status = 3 " +
+            "group by p.id ;"
+    )
+    LiveData<List<OrderReport>> getReportDaily(int date1 , int date2);
 
 }

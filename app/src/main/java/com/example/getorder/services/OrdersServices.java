@@ -2,10 +2,8 @@ package com.example.getorder.services;
 
 import android.app.Application;
 import android.os.AsyncTask;
-import android.renderscript.Sampler;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 
 import com.example.getorder.db.OrderDao;
 import com.example.getorder.db.OrderDb;
@@ -13,16 +11,14 @@ import com.example.getorder.db.OrderDetailsDao;
 import com.example.getorder.db.ProductDao;
 import com.example.getorder.model.Order;
 import com.example.getorder.model.OrderDetails;
+import com.example.getorder.model.OrderReport;
 import com.example.getorder.model.OrderStatus;
-import com.example.getorder.model.Product;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 
 public class OrdersServices {
     private OrderDao orderDao;
@@ -44,13 +40,13 @@ public class OrdersServices {
         this.application = application;
     }
 
-    //set status to order
-    public void setStatusOrder(int orderId, OrderStatus orderStatus){
-        Order order = orderDao.getOrder(orderId);
-        order.setStatus(orderStatus.ordinal());
-        orderDao.update(order);
-    }
-    //this method update the order buy checking the orderDetails of this order and set amounts and profit async
+//    //set status to order
+//    public void setStatusOrder(int orderId, OrderStatus orderStatus){
+//        Order order = orderDao.getOrder(orderId);
+//        order.setStatus(orderStatus.ordinal());
+//        orderDao.update(order);
+//    }
+    //this method update the order
     public void updateOrder(Order order){
         new UpdateOrderAsync(orderDao,orderDetailsDao).execute(order);
     }
@@ -100,6 +96,14 @@ public class OrdersServices {
         new UpdateOrderDetailsAsync(orderDao,orderDetailsDao).execute(orderDetails);
     }
 
+    public LiveData<Order> getOrderById(int orderId){
+        return orderDao.getOrder(orderId);
+    }
+
+    public LiveData<List<OrderReport>> getReportDaily(int date1,int date2){
+        return orderDao.getReportDaily(date1,date2);
+    }
+
 //OLD DO NOT USE
 // check all orderDetails list belong to  same order
     public List<OrderDetails> validateOrderDetails(int orderId ,List<OrderDetails> orderDetails){
@@ -112,19 +116,19 @@ public class OrdersServices {
         return finalOd;
     }
     //update whole orderDetails with new List and update  order only open orders async
-    public void updateOrderAndOrderDetailsWithList(int orderId,List<OrderDetails> orderDetails){
-
-        if(orderDao.getOrder(orderId).getStatus() == OrderStatus.OPEN.ordinal()){
-            orderDetailsDao.delete(orderId);
-            for(OrderDetails od:orderDetails){
-                if(od.getOrderId() != orderId){
-                    orderDetails.remove(od);
-                }
-            }
-            OrderDetails[] od = orderDetails.toArray(new OrderDetails[0]);
-            new AddOrderDetailToOrderAsync(orderDao,orderDetailsDao).execute(od);
-        }
-    }
+//    public void updateOrderAndOrderDetailsWithList(int orderId,List<OrderDetails> orderDetails){
+//
+//        if(orderDao.getOrder(orderId).getStatus() == OrderStatus.OPEN.ordinal()){
+//            orderDetailsDao.delete(orderId);
+//            for(OrderDetails od:orderDetails){
+//                if(od.getOrderId() != orderId){
+//                    orderDetails.remove(od);
+//                }
+//            }
+//            OrderDetails[] od = orderDetails.toArray(new OrderDetails[0]);
+//            new AddOrderDetailToOrderAsync(orderDao,orderDetailsDao).execute(od);
+//        }
+//    }
     //add order to local db async
     public int addOrder(Order order, final List<OrderDetails> orderDetails){
 
@@ -147,6 +151,7 @@ public class OrdersServices {
     public LiveData<List<Order>> getLastOrder(){
         return orderDao.getLastOrder(OrderStatus.NEW.ordinal());
     }
+
 
 
     //ASYNC TASK

@@ -22,6 +22,15 @@ public class SetOrderViewModel extends AndroidViewModel {
     private List<OrderDetails> tempOrderDetailsList = new ArrayList<>() ;
     private Order TempOrder;
     private OrderDetails orderDetails;
+    private int orderId;
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
 
     public SetOrderViewModel(@NonNull Application application) {
         super(application);
@@ -136,12 +145,17 @@ public class SetOrderViewModel extends AndroidViewModel {
 
         for(OrderDetails od : orderDetails){
             sumBuy += od.getBuyPrice();
-            sumSell += (od.getSellPrice()*od.getDiscount());
+            double sell = (od.getSellPrice()-(od.getSellPrice()*od.getDiscount())) * od.getQuantity();
+            sumSell +=(int) sell;
         }
         profit = sumSell-sumBuy;
         order.setProfit(profit);
         order.setAmountBuy(sumBuy);
         order.setAmountSell(sumSell);
         ordersServices.updateOrder(order);
+    }
+
+    public LiveData<Order> getOrderById(int orderId){
+        return  ordersServices.getOrderById(orderId);
     }
 }

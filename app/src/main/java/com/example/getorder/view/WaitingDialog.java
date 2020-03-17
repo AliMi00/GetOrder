@@ -7,12 +7,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RadioButton;
+import android.widget.Switch;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.getorder.R;
+import com.example.getorder.model.OrderStatus;
+import com.example.getorder.services.OrdersServices;
 
 public class WaitingDialog extends DialogFragment {
 
@@ -44,7 +47,13 @@ public class WaitingDialog extends DialogFragment {
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        listener.setPaidOrder();
+
+                        if(rbtnPaid.isChecked()){
+                            listener.setPaidOrder(OrderStatus.PAYED);
+                        }
+                        else if(rbtnUnPaid.isChecked()){
+                            listener.setPaidOrder(OrderStatus.UNPAYED);
+                        }
                     }
                 });
 
@@ -55,6 +64,6 @@ public class WaitingDialog extends DialogFragment {
     }
 
     public interface WaitingDialogListener{
-        void setPaidOrder();
+        void setPaidOrder(OrderStatus orderStatus);
     }
 }

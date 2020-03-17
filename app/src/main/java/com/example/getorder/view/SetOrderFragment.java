@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.getorder.R;
@@ -32,16 +31,28 @@ import java.util.List;
 
 public class SetOrderFragment extends Fragment {
 
+    private static final String ARG_ID = "argOrderId";
+
     private SetOrderViewModel mViewModel;
 
     private RecyclerView rvSetOrder;
     private SetOrderAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private Order mOrder;
+    private boolean returnState = false;
 
 
-    public static SetOrderFragment newInstance() {
-        return new SetOrderFragment();
+    public static SetOrderFragment newInstance(int orderId) {
+        SetOrderFragment fragment = new SetOrderFragment();
+        Bundle arg = new Bundle();
+        arg.putInt(ARG_ID,orderId);
+        fragment.setArguments(arg);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -55,19 +66,35 @@ public class SetOrderFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(SetOrderViewModel.class);
 
+        if(getArguments() != null){
+            mViewModel.setOrderId(getArguments().getInt(ARG_ID));
+        }
+
         FloatingActionButton btnAddOrder = getView().findViewById(R.id.btnAddOrder);
         btnAddOrder.setOnClickListener(btnAddOrderOnClickListener);
         buildRecycleView();
         mViewModel.deleteNewOrders();
-        mViewModel.getLastOrder().observe(getViewLifecycleOwner(), new Observer<List<Order>>() {
-            @Override
-            public void onChanged(List<Order> orders) {
-                if(orders.size()>0){
-                    mOrder =orders.get(0);
+        if(mViewModel.getOrderId() != 0 ){
+            mViewModel.getOrderById(mViewModel.getOrderId()).observe(getViewLifecycleOwner(),order -> {
+                if(order != null){
+                    mOrder = order;
                     getTempOrderDetails();
+                    returnState = true;
                 }
-            }
-        });
+            });
+
+        }else{
+
+            mViewModel.getLastOrder().observe(getViewLifecycleOwner(), new Observer<List<Order>>() {
+                @Override
+                public void onChanged(List<Order> orders) {
+                    if(orders.size()>0){
+                        mOrder =orders.get(0);
+                        getTempOrderDetails();
+                    }
+                }
+            });
+        }
     }
 
     //build recycleView And click Listener
@@ -172,6 +199,13 @@ public class SetOrderFragment extends Fragment {
                         mViewModel.newUpdateOrder(mViewModel.getTempOrderDetailsList(),mOrder);
                         mOrder = null;
                         mViewModel.setTempOrderDetailsList(new ArrayList<>());
+                        buildRecycleView();
+                        if(returnState){
+                            getActivity().getSupportFragmentManager()
+                                    .beginTransaction()
+                                    .replace(R.id.fragment_container,new WaitingFragment())
+                                    .commit();
+                        }
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

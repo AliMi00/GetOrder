@@ -39,8 +39,8 @@ public class WaitingViewModel extends AndroidViewModel {
         //todo go to another activity for editing the order
     }
     //set order status
-    public void setOrderStatus(int id , OrderStatus status){
-        ordersServices.setStatusOrder(id,status);
+    public void setOrderStatus(Order order){
+        ordersServices.updateOrder(order);
     }
     //delete the order completely
     public void deleteOrder(int id){
