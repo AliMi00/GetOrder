@@ -1,4 +1,4 @@
-package com.example.getorder.view;
+package com.example.getorder.view.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -13,6 +13,10 @@ import android.widget.Toast;
 
 import com.example.getorder.R;
 import com.example.getorder.model.OrderStatus;
+import com.example.getorder.view.fragment.OrderDailyReportFragment;
+import com.example.getorder.view.fragment.ProductsFragment;
+import com.example.getorder.view.fragment.SetOrderFragment;
+import com.example.getorder.view.fragment.WaitingFragment;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -83,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.nav_order:
                     Toast.makeText(MainActivity.this, String.valueOf(OrderStatus.NEW.ordinal()), Toast.LENGTH_SHORT).show();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,SetOrderFragment.newInstance(0)).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, SetOrderFragment.newInstance(0)).commit();
                     break;
                 case R.id.nav_waiting:
                     Toast.makeText(MainActivity.this, "fra3", Toast.LENGTH_SHORT).show();

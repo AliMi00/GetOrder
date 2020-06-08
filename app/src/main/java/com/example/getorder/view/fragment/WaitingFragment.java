@@ -1,4 +1,4 @@
-package com.example.getorder.view;
+package com.example.getorder.view.fragment;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -19,6 +19,8 @@ import android.widget.Toast;
 import com.example.getorder.R;
 import com.example.getorder.model.Order;
 import com.example.getorder.model.OrderStatus;
+import com.example.getorder.view.dialog.WaitingDialog;
+import com.example.getorder.view.adapter.WaitingAdapter;
 import com.example.getorder.viewModel.WaitingViewModel;
 
 import java.util.ArrayList;

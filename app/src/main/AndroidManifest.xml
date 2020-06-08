@@ -13,12 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".view.AddProductActivity"
-            android:parentActivityName=".view.MainActivity"
+            android:name=".view.activity.AddProductActivity"
+            android:parentActivityName=".view.activity.MainActivity"
             ></activity>
-        <activity android:name=".view.ProductActivity" />
+        <activity android:name=".view.activity.ProductActivity" />
         <activity
-            android:name=".view.MainActivity"
+            android:name=".view.activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,4 +1,4 @@
-package com.example.getorder.view;
+package com.example.getorder.view.fragment;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.Observer;
@@ -23,6 +23,9 @@ import com.example.getorder.model.Order;
 import com.example.getorder.model.OrderDetails;
 import com.example.getorder.model.OrderStatus;
 import com.example.getorder.model.Product;
+import com.example.getorder.view.dialog.SetOrderDialog;
+import com.example.getorder.view.dialog.SetOrderQuantityDialog;
+import com.example.getorder.view.adapter.SetOrderAdapter;
 import com.example.getorder.viewModel.SetOrderViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 

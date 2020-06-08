@@ -1,4 +1,4 @@
-package com.example.getorder.view;
+package com.example.getorder.view.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;

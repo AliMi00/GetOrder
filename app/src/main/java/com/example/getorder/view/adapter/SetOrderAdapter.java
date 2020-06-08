@@ -1,4 +1,4 @@
-package com.example.getorder.view;
+package com.example.getorder.view.adapter;
 
 import android.os.Build;
 import android.view.LayoutInflater;

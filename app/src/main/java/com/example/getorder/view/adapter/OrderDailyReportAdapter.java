@@ -1,16 +1,13 @@
-package com.example.getorder.view;
+package com.example.getorder.view.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.getorder.R;
 import com.example.getorder.model.OrderReport;
-
 import java.util.List;
 
 public class OrderDailyReportAdapter extends RecyclerView.Adapter<OrderDailyReportAdapter.OrderDailyReportViewHolder> {
@@ -35,8 +32,8 @@ public class OrderDailyReportAdapter extends RecyclerView.Adapter<OrderDailyRepo
 
         OrderReport currentItem = OrderReportModelList.get(position);
         holder.txtProductName.setText(currentItem.getProductName());
-        holder.txtProductQuantity.setText(String.valueOf(currentItem.getProductQuantity()));
-        holder.txtProductSumPrice.setText(String.valueOf(currentItem.getProductSum()));
+        holder.txtProductQuantity.setText("quantity : "+ String.valueOf(currentItem.getProductQuantity()));
+        holder.txtProductSumPrice.setText("Price : " + String.valueOf(currentItem.getProductSum()));
     }
 
     @Override

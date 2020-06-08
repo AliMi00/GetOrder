@@ -1,4 +1,4 @@
-package com.example.getorder.view;
+package com.example.getorder.view.fragment;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.example.getorder.R;
 import com.example.getorder.model.Order;
 import com.example.getorder.model.OrderReport;
+import com.example.getorder.view.adapter.OrderDailyReportAdapter;
 import com.example.getorder.viewModel.OrderDailyReportViewModel;
 
 import java.text.SimpleDateFormat;

@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.OrderDailyReportFragment">
+    android:background="@android:color/darker_gray"
+    tools:context=".view.fragment.OrderDailyReportFragment">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
