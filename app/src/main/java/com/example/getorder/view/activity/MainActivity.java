@@ -60,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
         //check if activity first start load home fragment
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new ProductsFragment()).commit();
-            navigationView.setCheckedItem(R.id.nav_product);
+                    SetOrderFragment.newInstance(0)).commit();
+            navigationView.setCheckedItem(R.id.nav_order);
         }
 
     }

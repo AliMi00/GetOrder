@@ -87,7 +87,6 @@ public class SetOrderFragment extends Fragment {
             });
 
         }else{
-
             mViewModel.getLastOrder().observe(getViewLifecycleOwner(), new Observer<List<Order>>() {
                 @Override
                 public void onChanged(List<Order> orders) {
@@ -98,6 +97,7 @@ public class SetOrderFragment extends Fragment {
                 }
             });
         }
+
     }
 
     //build recycleView And click Listener

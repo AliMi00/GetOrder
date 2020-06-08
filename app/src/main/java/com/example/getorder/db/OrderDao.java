@@ -41,12 +41,12 @@ public interface OrderDao {
     @Query("delete from orders where status = :orderStatus")
     void deleteOldNewOrders(int orderStatus);
 
-    @Query("SELECT p.title as productName , sum(od.quantity) as productQuantity , sum(od.sellPrice*od.quantity) as productSum " +
+    @Query("SELECT o.profit as profit , sum(od.quantity) as productQuantity , o.amountSell as productSum " +
             "FROM orders As o " +
             "inner join order_details as od on o.id = od.orderId " +
-            "inner join product as p on od.productId = p.id  " +
-            "where :date1 <= o.createDate AND o.createDate <= :date2 AND o.status = 3 " +
-            "group by p.id ;"
+//            "inner join product as p on od.productId = p.id  " +
+            "where :date1 <= o.createDate AND o.createDate <= :date2 AND o.status = 3 "+
+            "group by o.id ;"
     )
     LiveData<List<OrderReport>> getReportDaily(int date1 , int date2);
 

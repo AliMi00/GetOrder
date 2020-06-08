@@ -31,7 +31,7 @@ public class OrderDailyReportAdapter extends RecyclerView.Adapter<OrderDailyRepo
     public void onBindViewHolder(@NonNull OrderDailyReportViewHolder holder, int position) {
 
         OrderReport currentItem = OrderReportModelList.get(position);
-        holder.txtProductName.setText(currentItem.getProductName());
+        holder.txtProfit.setText("Profit : "+ String.valueOf(currentItem.getProfit()));
         holder.txtProductQuantity.setText("quantity : "+ String.valueOf(currentItem.getProductQuantity()));
         holder.txtProductSumPrice.setText("Price : " + String.valueOf(currentItem.getProductSum()));
     }
@@ -47,13 +47,13 @@ public class OrderDailyReportAdapter extends RecyclerView.Adapter<OrderDailyRepo
 
     //view holder class
     public class OrderDailyReportViewHolder extends RecyclerView.ViewHolder {
-        public TextView txtProductName;
+        public TextView txtProfit;
         public TextView txtProductQuantity;
         public TextView txtProductSumPrice;
         public OrderDailyReportViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            txtProductName = itemView.findViewById(R.id.txtProductName);
+            txtProfit = itemView.findViewById(R.id.txtProfit);
             txtProductQuantity = itemView.findViewById(R.id.txtProductQuantity);
             txtProductSumPrice = itemView.findViewById(R.id.txtProductSumPrice);
 

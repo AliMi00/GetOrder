@@ -67,8 +67,8 @@ public class WaitingFragment extends Fragment {
 
             @Override
             public void onShowItemClick(Order order) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,SetOrderFragment.newInstance(order.getId())).commit();
-                Toast.makeText(getContext(), "a", Toast.LENGTH_SHORT).show();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,SetOrderFragment.newInstance(order.getId())).addToBackStack(null).commit();
+                Toast.makeText(getContext(), "aaaaa", Toast.LENGTH_SHORT).show();
 
             }
         });

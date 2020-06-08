@@ -32,7 +32,7 @@ public class ProductDialog extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
+        builder.setIcon(R.drawable.ic_product);
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.product_change_dialog_layout, null);
 
@@ -45,18 +45,18 @@ public class ProductDialog extends DialogFragment {
 
         builder.setView(view)
                 .setTitle(R.string.product_change_dialog_title)
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
                     }
                 })
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.Ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        int valu = Integer.valueOf(edtDis.getText().toString());
+                        int value = Integer.valueOf(edtDis.getText().toString());
 
-                        double dis =Double.valueOf(valu) / 100;
+                        double dis =Double.valueOf(value) / 100;
                         Product product2 = new Product(
                                 edtTitle.getText().toString(),
                                 edtDesc.getText().toString(),

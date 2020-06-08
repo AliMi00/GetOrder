@@ -12,8 +12,8 @@
         android:ems="10"
         android:layout_marginEnd="20sp"
         android:layout_marginStart="20sp"
-        android:inputType="textPersonName"
-        android:hint="@string/product_dialog_title" />
+        android:inputType="number"
+        android:hint="@string/order_table_num_dialog" />
 
 
 

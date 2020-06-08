@@ -144,7 +144,7 @@ public class SetOrderViewModel extends AndroidViewModel {
         int sumBuy=0,sumSell=0,profit;
 
         for(OrderDetails od : orderDetails){
-            sumBuy += od.getBuyPrice();
+            sumBuy += (od.getBuyPrice() * od.getQuantity());
             double sell = (od.getSellPrice()-(od.getSellPrice()*od.getDiscount())) * od.getQuantity();
             sumSell +=(int) sell;
         }

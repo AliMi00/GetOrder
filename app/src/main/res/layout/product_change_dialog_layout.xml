@@ -10,8 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:layout_marginEnd="20sp"
-        android:layout_marginStart="20sp"
+        android:layout_marginEnd="30sp"
+        android:layout_marginStart="30sp"
         android:inputType="textPersonName"
         android:hint="@string/product_dialog_title" />
 
@@ -20,17 +20,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:layout_marginEnd="20sp"
-        android:layout_marginStart="20sp"
+        android:layout_marginEnd="30sp"
+        android:layout_marginStart="30sp"
         android:inputType="textPersonName"
+
         android:hint="@string/product_dialog_description" />
     <EditText
         android:id="@+id/edtSellPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:layout_marginEnd="20sp"
-        android:layout_marginStart="20sp"
+        android:layout_marginEnd="30sp"
+        android:layout_marginStart="30sp"
         android:inputType="number"
         android:hint="@string/product_dialog_sell" />
 
@@ -39,8 +40,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:layout_marginEnd="20sp"
-        android:layout_marginStart="20sp"
+        android:layout_marginEnd="30sp"
+        android:layout_marginStart="30sp"
         android:inputType="number"
         android:hint="@string/product_dialog_buy" />
 
@@ -49,8 +50,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:layout_marginEnd="20sp"
-        android:layout_marginStart="20sp"
+        android:layout_marginEnd="30sp"
+        android:layout_marginStart="30sp"
         android:inputType="number"
         android:hint="@string/product_dialog_discount" />
 
